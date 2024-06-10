@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
+const API_URL = "https://66656714d122c2868e408df2.mockapi.io/movies";
+
 const MovieDetail = () => {
   const { id } = useParams();
   const [movie, setMovie] = useState(null);
@@ -9,7 +11,7 @@ const MovieDetail = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `https://66656714d122c2868e408df2.mockapi.io/movies/?id=${id}`
+          API_URL
         );
         if (!response.ok) {
           throw new Error("Error al cargar los datos.");
@@ -27,28 +29,45 @@ const MovieDetail = () => {
   return (
     <div className="content__container">
       {!movie ? (
-        <h1>Cargando detalle...</h1>
+        <h1>Cargando...</h1>
       ) : (
         <>
-          <div className="alert alert-light text-center" role="alert">
-            <h4 className="alert-heading">
-              Película: <strong>{movie.Title}</strong>
+          <div className="more_container">
+            <h4 className="more_title">
+              Película:{movie.Title}
             </h4>
-            <hr />
-            <div className="movie__detail">
+            <hr/>
+            <div className="more__content">
               <img src={movie.Poster} alt={movie.Title} />
-              <p className="mb-0 p-20">
-                <strong>Descripción: </strong> {movie.Plot} <br />
-                <strong>Año: </strong> {movie.Year}
-                <br />
-                <strong>Imdb: </strong> {movie.imdb}
-              </p>
-            </div>
-            <button type="button" className="btn btn-primary">
-              <Link className="nav-link active" to={"/movies"}>
+                <div className="detail_group">
+                  <p className="detail_title">Descripcion:</p>
+                  <p className="detail_info"> {movie.Plot}</p>
+                </div>
+                <div className="detail_group">
+                  <p className="detail_title">Año:</p>
+                  <p className="detail_info">{movie.Year}</p>
+                </div>
+                <div className="detail_group">
+                  <p className="detail_title">Duracion:</p>
+                  <p className="detail_info">{movie.Runtime}</p>
+                </div>
+                <div className="detail_group">
+                  <p className="detail_title">Actores:</p>
+                  <p className="detail_info">{movie.Actors}</p>
+                </div>
+                <div className="detail_group">
+                  <p className="detail_title">Directores:</p>
+                  <p className="detail_info">{movie.Director}</p>
+                </div>
+                <div className="detail_group">
+                  <p className="detail_title">Genero:</p>
+                  <p className="detail_info">{movie.Genre}</p>
+                </div>
+                <Link className="btn-back" to={"/movieCatalog"}>
                 Volver
               </Link>
-            </button>
+            </div>
+              
           </div>
         </>
       )}

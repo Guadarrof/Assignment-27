@@ -1,21 +1,28 @@
 import React, { useState, useEffect } from "react";
 import MovieCard from "../components/MovieCard";
 
-const Movies = () => {
+const API_URL = "https://66656714d122c2868e408df2.mockapi.io/movies";
+
+const MovieCatalog = () => {
   const [movies, setMovies] = useState([]);
-  const [cargando, setCargando] = useState(true);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "https://66656714d122c2868e408df2.mockapi.io/movies"
+          API_URL
         );
         if (!response.ok) {
           throw new Error("Error al cargar los datos.");
         }
         const data = await response.json();
-        setCargando(false);
-        setMovies(data);
+        const sortedMovies = data.sort((a, b) => {
+          if (a.Title.toLowerCase() < b.Title.toLowerCase()) return -1;
+          if (a.Title.toLowerCase() > b.Title.toLowerCase()) return 1;
+          return 0;
+        });
+        setMovies(sortedMovies);
+        setLoading(false);
       } catch (error) {
         console.error("Error:", error.message);
       }
@@ -24,17 +31,13 @@ const Movies = () => {
   }, []);
 
   return (
-    <div className="content__container">
-      {cargando ? (
+    <div className="catalog_container">
+      {loading ? (
         <h1>Cargando...</h1>
       ) : (
         <>
-          <div className="alert alert-success text-start" role="alert">
-            <h4 className="alert-heading">Lista de Películas </h4>
-            <hr />
-            <p className="mb-0">
-              Total películas encontradas: <strong>{movies.length}</strong>
-            </p>
+          <div className="content_header">
+            <h3 className="header_h3">Nuestra seleccion</h3>
           </div>
           <div className="movie__list">
             {movies.map((movie) => (
@@ -47,4 +50,4 @@ const Movies = () => {
   );
 };
 
-export default Movies;
+export default MovieCatalog;
