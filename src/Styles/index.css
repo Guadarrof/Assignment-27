@@ -180,11 +180,14 @@ a{
     font-size: 26px;
 }
 .more__content{
-    margin: 8%;
+    margin: 12%;
     display: flex;
     flex-direction: column;
     justify-content: center;
 
+}
+.more_container{
+    margin:8%
 }
 
 .more__detail{
@@ -214,5 +217,10 @@ a{
 }
 
 .content__container{
-    margin-bottom: 10%;
+    margin-bottom: 20%;
+}
+
+.more__img{
+    width: 400px;
+    align-self: center;
 }

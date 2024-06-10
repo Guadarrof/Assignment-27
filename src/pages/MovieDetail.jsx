@@ -38,7 +38,7 @@ const MovieDetail = () => {
             </h4>
             <hr/>
             <div className="more__content">
-              <img src={movie.Poster} alt={movie.Title} />
+              <img src={movie.Poster} alt={movie.Title}  className="more__img"/>
                 <div className="detail_group">
                   <p className="detail_title">Descripcion:</p>
                   <p className="detail_info"> {movie.Plot}</p>
